@@ -9,23 +9,37 @@ public class Notas
 
         double notas[] = new double[cantidadNotas];
 
+         ingresoNotas(notas);
+         double promedio = calculoPromedio(notas);
+         double mayor = calculoMayor(notas);
+         double menor = calculoMenor(notas);
+         ordenamientoBurbuja(notas);
+         resumenNotas(promedio, mayor, menor, notas);
+         bancoDeNotas(menor);
+    }
 
-        // Ingreso de notas
+    public static double ingresoNotas(double[] notas)
+    {
         for(int i = 0; i < notas.length; i++)
         {
             notas[i] = Double.parseDouble(JOptionPane.showInputDialog("Ingrese la nota "+(i+1)+": "));
         }
+        return 0;
+    }
 
-        // Calculo de promedio
+    public static double calculoPromedio(double[] notas)
+    {
         double suma = 0;
         for(int i = 0; i < notas.length; i++)   
         {
             suma += notas[i];
         }
-        double promedio = suma / notas.length;
-        
+        double notaFinal = suma / notas.length;
+        return notaFinal;
+    }
 
-        // Calculo de nota mayor y menor
+    public static double calculoMayor(double[] notas)
+    {
         double mayor = notas[0];
         for(int i = 1; i < notas.length; i++)
         {
@@ -34,18 +48,30 @@ public class Notas
                 mayor = notas[i];
             }
         }
-        
+        return mayor;
+    }
 
+    public static double calculoMenor(double[] notas)
+    {
         double menor = notas[0];
-        for(int i = 1; i < notas.length; i++)   
+        for(int i = 1; i < notas.length; i++)
         {
             if(notas[i] < menor)
             {
                 menor = notas[i];
             }
         }
+        return menor;
+    }
+
+    public static void ordenamientoBurbuja(double[] notas)
+    {
+        /**
+         * En este método se implementa el algoritmo de ordenamiento burbuja para ordenar las notas de menor a mayor. 
+         * El algoritmo compara cada par de elementos adyacentes y los intercambia si están en el orden incorrecto. 
+         * Este proceso se repite hasta que la lista esté completamente ordenada.
+         */
         
-        // Ordenar el arreglo con metodo burbuja (apoyado con IA y un articulo de StackOverflow)
         for(int i = 0; i < notas.length - 1; i++)
         {
             for(int j = 0; j < notas.length - i - 1; j++)
@@ -58,13 +84,24 @@ public class Notas
                 }
             }
         }
+    }
 
+    public static void resumenNotas(double promedio, double mayor, double menor, double[] notas)
+    {
+        System.out.println("Resumen de notas: \n Promedio: "+promedio+"\n Nota mayor: "
+        +mayor+"\n Nota menor: "+menor+"\n Notas ordenadas: "+java.util.Arrays.toString(notas));
+    }
 
+    public static void bancoDeNotas(double menor)
+    {
+        /**
+         * En este método se le pregunta al usuario si el estudiante tiene puntos acumulados en el banco de notas. 
+         * Si la respuesta es afirmativa, se le solicita ingresar los puntos acumulados. 
+         * Luego, se verifica si al sumar esos puntos a la nota más baja (menor) se supera la nota máxima permitida (5.0). 
+         * Si es así, se ajusta la nota más baja al valor máximo; de lo contrario, se suma directamente los puntos al menor. 
+         * Finalmente, se muestra la nueva nota más baja después de aplicar los puntos del banco de notas.
+         */
 
-        // Impresion de resumen de las notas
-        System.out.println("Resumen de notas: \n Promedio: "+promedio+"\n Nota mayor: "+mayor+"\n Nota menor: "+menor+"\n Notas ordenadas: "+java.util.Arrays.toString(notas));
-
-        // Funcion adicional: Subir la nota mas baja con banco de notas
         double notaMaxima = 5.0; 
         char respuesta = JOptionPane.showInputDialog("¿El estudiante tiene puntos acumulados en el banco de notas? (S/N)").charAt(0);
         if(respuesta == 'S' || respuesta == 's')
@@ -91,8 +128,5 @@ public class Notas
         {
             System.out.println("No se han utilizado puntos del banco de notas.");
         }
-
-
-
     }
 }
